@@ -8,7 +8,7 @@
 
         <link rel="stylesheet" href="assets/css/style.css">
 
-        <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+        <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU" type="text/javascript"></script>
         <script src="http://yandex.st/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
 
         <script type="text/javascript">
@@ -18,16 +18,57 @@
 
             function init() {
                 myMap = new ymaps.Map("map", {
-                    center: [55.76, 37.64],
+                    center: [56.023, 36.988],
                     zoom  : 7
                 });
 
-                myPlacemark = new ymaps.Placemark([55.76, 37.64], {
-                    content       : 'Москва!',
-                    balloonContent: 'Столица России'
-                });
+//                myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+//                    content       : 'Москва!',
+//                    balloonContent: 'Столица России'
+//                });
+//
+//                myMap.geoObjects.add(myPlacemark);
 
-                myMap.geoObjects.add(myPlacemark);
+                var coords = [
+                    [56.023, 36.988],
+                    [56.025, 36.981],
+                    [56.020, 36.981],
+                    [56.021, 36.983],
+                    [56.027, 36.987]
+                ];
+
+                var myGeoObjects = [];
+
+                for (var i = 0; i < coords.length; i++) {
+                    myGeoObjects[i] = new ymaps.GeoObject({
+                        geometry: {
+                            type: "Point",
+                            coordinates: coords[i]
+                        }
+                    });
+                }
+
+                var myClusterer = new ymaps.Clusterer();
+                myClusterer.add(myGeoObjects);
+                myMap.geoObjects.add(myClusterer);
+
+//                var coords = [
+//                    [56.023, 36.988],
+//                    [56.025, 36.981],
+//                    [56.020, 36.981],
+//                    [56.021, 36.983],
+//                    [56.027, 36.987]
+//                ]
+//
+//                var myCollection = new ymaps.GeoObjectCollection();
+//
+//                for (var i = 0; i<coords.length; i++) {
+//                    myCollection.add(new ymaps.Placemark(coords[i]));
+//                }
+//
+//                myMap.geoObjects.add(myCollection);
+
+
             }
         </script>
 
