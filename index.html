@@ -27,9 +27,21 @@
                     myClusterer;
 
             myMap = new ymaps.Map("map", {
-                center:[55.753081, 37.623998],
-                zoom:7
+                center:[44.934680,34.091988],
+                //center:[55.753081, 37.623998],
+                zoom:13
             });
+
+            myMap.geoObjects.add(
+                    new ymaps.Placemark(
+                            [ymaps.geolocation.latitude, ymaps.geolocation.longitude],
+                            {
+                                balloonContentHeader: ymaps.geolocation.country,
+                                balloonContent: ymaps.geolocation.city,
+                                balloonContentFooter: ymaps.geolocation.region
+                            }
+                    )
+            );
 
             myMap.controls.add('smallZoomControl');
 
