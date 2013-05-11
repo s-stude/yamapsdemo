@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Быстрый старт. Размещение интерактивной карты на странице</title>
+    <title>YA Map App Demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <meta name="viewport" content="width=device-width">
@@ -13,74 +13,100 @@
 
     <script type="text/javascript">
         ymaps.ready(init);
-        var myMap,
-                myPlacemark;
 
         function init() {
+            var
+                    friendsGeoObjects = [],
+                    enemiesGeoObjects = [],
+                    i, j,
+                    myMap,
+                    myPlacemark,
+                    clientsButton,
+                    opponentsButton,
+                    myToolBar,
+                    myClusterer;
+
             myMap = new ymaps.Map("map", {
-                center:[55.753081,37.623998],
+                center:[55.753081, 37.623998],
                 zoom:7
             });
 
-            var friendsCoordinates = [
-                [55.750177,37.595846],
-                [55.746691,37.629835],
-                [55.750177,37.622968],
-                [55.756566,37.610609],
-                [55.755598,37.631895]
+            myMap.controls.add('smallZoomControl');
+
+            friendsCoordinates = [
+                [55.750177, 37.595846],
+                [55.746691, 37.629835],
+                [55.750177, 37.622968],
+                [55.756566, 37.610609],
+                [55.755598, 37.631895]
             ];
 
-            var enemiesCoordinates = [
-                [55.753439,37.621886],
-                [55.750489,37.625372],
-                [55.748359,37.610952],
-                [55.744292,37.645971],
-                [55.767331,37.609922],
-                [55.750177,37.595846]
+            enemiesCoordinates = [
+                [55.753439, 37.621886],
+                [55.750489, 37.625372],
+                [55.748359, 37.610952],
+                [55.744292, 37.645971],
+                [55.767331, 37.609922],
+                [55.750177, 37.595846]
             ];
 
-            var friendsGeoObjects = [];
-
-
-            for (var i = 0; i < friendsCoordinates.length; i++) {
+            for (i = 0; i < friendsCoordinates.length; i++) {
                 friendsGeoObjects[i] = new ymaps.GeoObject({
                     geometry:{
                         type:"Point",
                         coordinates:friendsCoordinates[i]
                     },
                     properties:{
-                        hintContent:"Client #" + (i+1),
-                        balloonContentHeader:"Client #" + (i+1),
-                        balloonContentBody:"This is your client #" + (i+1)
+                        hintContent:"Клиент #" + (i + 1),
+                        balloonContentHeader:"Клиент #" + (i + 1),
+                        balloonContentBody:"Это мой клиент #" + (i + 1)
                     }
                 }, {
                     preset:"twirl#redDotIcon"
                 });
             }
 
-            var enemiesGeoObjects = [];
-            for (var i = 0; i < enemiesCoordinates.length; i++) {
-                enemiesGeoObjects[i] = new ymaps.GeoObject({
+            for (j = 0; j < enemiesCoordinates.length; j++) {
+                enemiesGeoObjects[j] = new ymaps.GeoObject({
                     geometry:{
                         type:"Point",
-                        coordinates: enemiesCoordinates[i]
+                        coordinates:enemiesCoordinates[j]
                     },
                     properties:{
-                        hintContent:"Competitor #" + (i+1),
-                        balloonContentHeader:"Competitor #" + (i+1),
-                        balloonContentBody:"This is your competitor #" + (i+1)
+                        hintContent:"Конкурент #" + (j + 1),
+                        balloonContentHeader:"Конкурент #" + (j + 1),
+                        balloonContentBody:"Это мой конкурент #" + (j + 1)
                     }
                 }, {
                     preset:"twirl#darkgreenDotIcon"
                 });
             }
 
-            var myClusterer = new ymaps.Clusterer();
-
-            myClusterer.add(friendsGeoObjects);
-            myClusterer.add(enemiesGeoObjects);
-
+            myClusterer = new ymaps.Clusterer();
             myMap.geoObjects.add(myClusterer);
+
+            clientsButton = new ymaps.control.Button('Клиент');
+            clientsButton.events.add('select', function () {
+                myClusterer.add(friendsGeoObjects);
+            });
+            clientsButton.events.add('deselect', function () {
+                myClusterer.remove(friendsGeoObjects);
+            });
+
+            opponentsButton = new ymaps.control.Button('Конкуренты');
+            opponentsButton.events.add('select', function () {
+                myClusterer.add(enemiesGeoObjects);
+            });
+            opponentsButton.events.add('deselect', function () {
+                myClusterer.remove(enemiesGeoObjects);
+            });
+
+
+
+            myToolBar = new ymaps.control.ToolBar();
+            myToolBar.add(clientsButton);
+            myToolBar.add(opponentsButton);
+            myMap.controls.add(myToolBar);
         }
     </script>
 
