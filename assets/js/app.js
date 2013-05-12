@@ -12,20 +12,21 @@ function init() {
         opponentsClusterer,
         clientsClusterer;
 
+    var center = [55.756757,37.622212];
+
     myMap = new ymaps.Map("map", {
         // center:[44.934680, 34.091988],
-        center:[55.753081, 37.623998],
+        center: center,
         zoom:14
     });
 
     myMap.geoObjects.add(
         new ymaps.Placemark(
-            [55.753081, 37.623998],
+            center,
             {
+                iconContent: "Я",
                 hintContent:"Вы тут",
-                balloonContentHeader: "Вы тут",
-                balloonContent: "Ваше местоположение",
-                balloonContentFooter: "ContentFooter"
+                balloonContent: "Ваше местоположение"
             }
 //            [ymaps.geolocation.latitude, ymaps.geolocation.longitude],
 //            {
