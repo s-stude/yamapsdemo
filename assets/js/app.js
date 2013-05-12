@@ -9,7 +9,8 @@ function init() {
         clientsButton,
         opponentsButton,
         myToolBar,
-        myCluster;
+        opponentsClusterer,
+        clientsClusterer;
 
     myMap = new ymaps.Map("map", {
         // center:[44.934680, 34.091988],
@@ -17,34 +18,47 @@ function init() {
         zoom:14
     });
 
-//    myMap.geoObjects.add(
-//        new ymaps.Placemark(
+    myMap.geoObjects.add(
+        new ymaps.Placemark(
+            [55.753081, 37.623998],
+            {
+                hintContent:"Вы тут",
+                balloonContentHeader: "Вы тут",
+                balloonContent: "Ваше местоположение",
+                balloonContentFooter: "ContentFooter"
+            }
 //            [ymaps.geolocation.latitude, ymaps.geolocation.longitude],
 //            {
 //                balloonContentHeader:ymaps.geolocation.country,
 //                balloonContent:ymaps.geolocation.city,
 //                balloonContentFooter:ymaps.geolocation.region
 //            }
-//        )
-//    );
+        )
+    );
 
     myMap.controls.add('smallZoomControl');
 
     friendsCoordinates = [
-        [55.750177, 37.595846],
-        [55.746691, 37.629835],
-        [55.750177, 37.622968],
-        [55.756566, 37.610609],
-        [55.755598, 37.631895]
+        [55.754187,37.627220],
+        [55.753897,37.628594],
+        [55.753316,37.627564],
+        [55.755252,37.623616],
+        [55.758979,37.623701],
+        [55.755375,37.614861],
+        [55.758376,37.614775],
+        [55.760409,37.629366],
+        [55.758886,37.630310],
     ];
 
     enemiesCoordinates = [
-        [55.753439, 37.621886],
-        [55.750489, 37.625372],
-        [55.748359, 37.610952],
-        [55.744292, 37.645971],
-        [55.767331, 37.609922],
-        [55.750177, 37.595846]
+        [55.760967,37.619496],
+        [55.757156,37.610140],
+        [55.753913,37.608080],
+        [55.752316,37.606449],
+        [55.751880,37.622414],
+        [55.750815,37.614775],
+        [55.757543,37.607737],
+        [55.750912,37.625075],
     ];
 
     for (i = 0; i < friendsCoordinates.length; i++) {
@@ -79,29 +93,38 @@ function init() {
         });
     }
 
-    myCluster = new ymaps.Clusterer();
-    myMap.geoObjects.add(myCluster);
+    opponentsClusterer = new ymaps.Clusterer({
+        preset: "twirl#invertedDarkgreenClusterIcons"
+    });
 
+    clientsClusterer = new ymaps.Clusterer({
+        preset: "twirl#invertedRedClusterIcons"
+    });
+
+    myMap.geoObjects.add(clientsClusterer);
+    myMap.geoObjects.add(opponentsClusterer);
+
+    // Create Clients button
     clientsButton = new ymaps.control.Button('Клиент');
-
     clientsButton.events.add('select', function () {
-        myCluster.add(friendsGeoObjects);
+        clientsClusterer.add(friendsGeoObjects);
     });
     clientsButton.events.add('deselect', function () {
-        myCluster.remove(friendsGeoObjects);
+        clientsClusterer.remove(friendsGeoObjects);
     });
     clientsButton.state.set('selected', true);
 
+    // Create opponents button
     opponentsButton = new ymaps.control.Button('Конкуренты');
     opponentsButton.events.add('select', function () {
-        myCluster.add(enemiesGeoObjects);
+        opponentsClusterer.add(enemiesGeoObjects);
     });
     opponentsButton.events.add('deselect', function () {
-        myCluster.remove(enemiesGeoObjects);
+        opponentsClusterer.remove(enemiesGeoObjects);
     });
     opponentsButton.state.set('selected', true);
 
-
+    // Create toolbar
     myToolBar = new ymaps.control.ToolBar();
     myToolBar.add(clientsButton);
     myToolBar.add(opponentsButton);
