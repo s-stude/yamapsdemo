@@ -39,7 +39,9 @@ ul{
 .legendswitch{
     position: absolute;
     top:0;
-    left:0;
+    right:0;
+    margin-right: 20%;
+    padding-right: 25px;
     background: #98fb98;
 }
 
@@ -55,7 +57,11 @@ ul{
 .legendswitch input{
     position: absolute;
     top:0;
-    left:-9999px;
+    l1eft:-9999px;
+}
+
+.legendswitch input:checked{
+
 }
 
 .client {
@@ -98,4 +104,13 @@ ul{
     /*.map{*/
         /*width:100%;*/
     /*}*/
+}
+
+@media screen and (orientation: portrait){
+    .legend {
+        display: none;
+    }
+    .map {
+        width: 100%;
+    }
 }
