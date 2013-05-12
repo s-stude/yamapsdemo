@@ -16,7 +16,8 @@ ul{
     left: 0px;
     bottom: 0px;
     right:0px;
-    width: 80%;
+    /*width: 80%;*/
+    width: 100%;
     -webkit-box-shadow: 3px 0px 2px rgba(50, 50, 50, 0.48);
     -moz-box-shadow:    3px 0px 2px rgba(50, 50, 50, 0.48);
     box-shadow:         3px 0px 2px rgba(50, 50, 50, 0.48);
@@ -107,20 +108,20 @@ ul{
 }
 
 @media screen and (orientation: portrait){
-    .legend {
-        display: none;
-    }
-    .map {
-        width: 100%;
-    }
+    /*.legend {*/
+        /*display: none;*/
+    /*}*/
+    /*.map {*/
+        /*width: 100%;*/
+    /*}*/
 }
 
 @media screen and (orientation: landscape){
-    .legend {
-        display: inherit !important;
-    }
+    /*.legend {*/
+        /*display: inherit !important;*/
+    /*}*/
 
-    .map {
-        width: 80%;
-    }
+    /*.map {*/
+        /*width: 80%;*/
+    /*}*/
 }
