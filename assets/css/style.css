@@ -114,3 +114,13 @@ ul{
         width: 100%;
     }
 }
+
+@media screen and (orientation: landscape){
+    .legend {
+        display: inherit !important;
+    }
+
+    .map {
+        width: 80%;
+    }
+}
