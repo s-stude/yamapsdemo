@@ -1,14 +1,9 @@
-html, body, ul, li {
+html, body{
     margin: 0px;
     padding: 0px;
 }
 
-ul{
-    list-style-position: inside;
-}
-
-.app {
-}
+.app {}
 
 .map{
     position: absolute;
@@ -16,61 +11,7 @@ ul{
     left: 0px;
     bottom: 0px;
     right:0px;
-    /*width: 80%;*/
     width: 100%;
-    -webkit-box-shadow: 3px 0px 2px rgba(50, 50, 50, 0.48);
-    -moz-box-shadow:    3px 0px 2px rgba(50, 50, 50, 0.48);
-    box-shadow:         3px 0px 2px rgba(50, 50, 50, 0.48);
-}
-
-.legend{
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20%;
-    height:100%;
-    overflow-y: auto;
-}
-
-.legend ul{
-    margin-left: 10px;
-
-}
-
-.legendswitch{
-    position: absolute;
-    top:0;
-    right:0;
-    margin-right: 20%;
-    padding-right: 25px;
-    background: #98fb98;
-}
-
-.legendswitch label{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 25px;
-    height:25px;
-    background: #98fb98;
-}
-
-.legendswitch input{
-    position: absolute;
-    top:0;
-    l1eft:-9999px;
-}
-
-.legendswitch input:checked{
-
-}
-
-.client {
-    color: #006400;
-}
-
-.opponent {
-    color: darkred
 }
 
 @media (min-width: 1200px) {
@@ -99,28 +40,18 @@ ul{
     /*}*/
 }
 @media (max-width: 480px) {
-    /*.legend{*/
-        /*display: none;*/
-    /*}*/
     /*.map{*/
         /*width:100%;*/
     /*}*/
 }
 
 @media screen and (orientation: portrait){
-    /*.legend {*/
-        /*display: none;*/
-    /*}*/
     /*.map {*/
         /*width: 100%;*/
     /*}*/
 }
 
 @media screen and (orientation: landscape){
-    /*.legend {*/
-        /*display: inherit !important;*/
-    /*}*/
-
     /*.map {*/
         /*width: 80%;*/
     /*}*/
