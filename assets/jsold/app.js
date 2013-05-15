@@ -10,7 +10,8 @@ function init() {
         opponentsButton,
         myToolBar,
         opponentsClusterer,
-        clientsClusterer;
+        clientsClusterer,
+        point;
 
     var center = [55.756757, 37.622212];
 
@@ -48,7 +49,7 @@ function init() {
         [55.755375, 37.614861],
         [55.758376, 37.614775],
         [55.760409, 37.629366],
-        [55.758886, 37.630310],
+        [55.758886, 37.630310]
     ];
 
     enemiesCoordinates = [
@@ -63,7 +64,7 @@ function init() {
     ];
 
     for (i = 0; i < friendsCoordinates.length; i++) {
-        var point = createPoint(
+        point = createPoint(
             friendsCoordinates[i],
             "Клиент #" + (i + 1),
             "Клиент #" + (i + 1),
@@ -75,7 +76,7 @@ function init() {
 
     for (j = 0; j < enemiesCoordinates.length; j++) {
 
-        var point = createPoint(
+        point = createPoint(
             enemiesCoordinates[j],
             "Конкурент #" + (j + 1),
             "Конкурент #" + (j + 1),

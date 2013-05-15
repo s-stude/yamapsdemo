@@ -8,6 +8,15 @@ module.exports = function (grunt) {
             destcss: 'style.css'
         },
         jshint:{
+            options: {
+                curly: true,
+                eqeqeq: true,
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true
+                }
+            },
             gruntfile: ['Gruntfile.js'],
             appjs:['assets/js/**/*.js']
         },
