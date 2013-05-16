@@ -23,7 +23,11 @@ module.exports = function (grunt) {
         concat:{
             appjs:{
                 src:'<%= jshint.appjs %>',
-                dest:'<%= vars.destdir %>/assets/js/gapp.js'
+                dest:'<%= vars.destdir %>/assets/js/<%= vars.destappjs %>'
+            },
+            css: {
+                src: 'assets/css/**/*.css',
+                dest: '<%= vars.destdir %>/assets/css/<%= vars.destcss %>'
             }
         },
         uglify: {
@@ -43,13 +47,13 @@ module.exports = function (grunt) {
         copy:{
             main:{
                 files:[
-                    {src:['assets/css/*'], dest:'<%= vars.destdir %>/'},
-                    {src:['index.html'], dest:'<%= vars.destdir %>/'}
+//                    {src:['assets/css/*'], dest:'<%= vars.destdir %>/'},
+                    {src:['*.html'], dest:'<%= vars.destdir %>/'}
                 ]
             }
         },
         watch:{
-            files:['<%= jshint.gruntfile %>','<%= jshint.appjs %>', 'index.html'],
+            files:['<%= jshint.gruntfile %>','<%= jshint.appjs %>', 'assets/css/**/*.css',  '*.html'],
             tasks:['jshint', 'concat', 'copy']
         },
         connect:{
