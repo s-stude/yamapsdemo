@@ -5,12 +5,59 @@
  * Time: 7:44 PM
  * To change this template use File | Settings | File Templates.
  */
-(function(window, document, $, gapp){
+(function (window, document, $, gapp, undefined) {
 
-    function Module(){
+    function Module() {
 
+        var token,
+            loginCallback = function (authResult) {
+                $('.error-message').addClass('hidden');
+                if(authResult.error){
+                   switch(authResult.error.code){
+                       case 401:
+                           $('#unauth').removeClass('hidden');
+                           break;
+                       case 500:
+                           $('#invalidreq').removeClass('hidden');
+                           break;
+                   }
+                }
+
+                token = authResult.access_token;
+                gapp.router.indexPage();
+            },
+            login = function () {
+                var $login = $('.input_login'),
+                    $password = $('.input_password'),
+
+                    loginVal = $login.val(),
+                    passwordVal = $password.val(),
+
+                    $loginContainer = $('.form-container-login'),
+                    $passwordContainer = $('.form-container-password');
+
+                $loginContainer.removeClass('form-container__error');
+                $passwordContainer.removeClass('form-container__error');
+
+                if (loginVal === '') {
+                    $loginContainer.addClass('form-container__error');
+                    return;
+                }
+                if (passwordVal === '') {
+                    $passwordContainer.addClass('form-container__error');
+                    return;
+                }
+
+
+                gapp.request.authenticate(loginVal, passwordVal, loginCallback);
+            };
+
+        return {
+            login:login
+        };
     }
 
     window.gapp.auth = new Module();
+
 
 })(window, document, jQuery, gapp || {});
