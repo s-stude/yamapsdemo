@@ -21,6 +21,7 @@
                            $('#invalidreq').removeClass('hidden');
                            break;
                    }
+                    return;
                 }
 
                 token = authResult.access_token;
