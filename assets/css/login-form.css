@@ -47,11 +47,11 @@
     border: 1px solid #d2d2d4;
     border-radius: 5px;
 }
-.form-item__login,
-.form-item__password
+.input_login,
+.input_password
 {
     font-size: 16px;
-    display: block;
+    display: inline-block;
     text-align: center;
     background: #f0f0f0;
     border: 0px;
@@ -61,19 +61,34 @@
     width: 100%;
 }
 
-.form-item__login {
-    border-bottom: 1px solid #c2c6ca;
+.form-container-login,
+.input_login
+{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 
-.form-item__password {
-    border-top: 1px solid #ffffff;
+.form-container-password,
+.input_password
+{
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.login-form .button {
+.form-container-login {
+    border-bottom: 1px solid #c2c6ca;
+}
+
+.form-container-password {
+    border-top: 1px solid #ffffff;
+}
+
+.form-container__error
+{
+    border: 1px solid red;
+}
+
+.login-form .login-button {
     outline: 0;
 
     text-decoration: none;
@@ -103,10 +118,10 @@
 
 }
 
-.login-form .button:focus, .login-form .button:hover  {
+.login-form .login-button:focus, .login-form .login-button:hover  {
     box-shadow: inset 0 0 5px white;
 }
-.login-form .button:active {
+.login-form .login-button:active {
     box-shadow: inset 0 0 5px #000000;
 }
 
