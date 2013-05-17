@@ -30,7 +30,7 @@
                 access_token : 'alr9wUGYBf4783nJSByfb4'
             };
 
-            setTimeout(authCallback(successResult), 2000);
+            setTimeout(authCallback(unAuthUserError), 2000);
         };
 
         return {
