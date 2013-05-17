@@ -3,6 +3,7 @@
     <head>
         <title>YA Map App Demo</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width">
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -17,11 +18,21 @@
             <h1 class="header">User Login</h1>
 
             <div class="form-item">
-                <input class="input-separated" type="text" name="loginfield" placeholder="login"/>
-                <input class="input-separated-light" type="password" name="passwordfield" placeholder="password"/>
+                <div class="form-container-login">
+                    <input class="input_login" type="text" name="loginfield" placeholder="login"/>
+                </div>
+                <div class="form-container-password">
+                    <input class="input_password" type="password" name="passwordfield" placeholder="password"/>
+                </div>
             </div>
-
-            <a href="#" class="button">Sign In</a>
+            <p class="error-message hidden" id="unauth">Wrong login or password</p>
+            <p class="error-message hidden" id="invalidreq">Something went wrong</p>
+            <a href="#" class="login-button" onclick="return gapp.auth.login()">Sign In</a>
         </div>
+
+        <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.full&lang=ru-RU"
+                type="text/javascript"></script>
+        <script src="assets/js/libs.js" type="text/javascript"></script>
+        <script src="assets/js/gapp.js" type="text/javascript"></script>
     </body>
 </html>
