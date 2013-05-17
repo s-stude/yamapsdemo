@@ -5,6 +5,7 @@ module.exports = function (grunt) {
         vars:{
             destdir: 'www-root',
             destappjs: 'gapp.js',
+            destlibjs: 'libs.js',
             destcss: 'style.css'
         },
         jshint:{
@@ -18,12 +19,16 @@ module.exports = function (grunt) {
                 }
             },
             gruntfile: ['Gruntfile.js'],
-            appjs:['assets/js/**/*.js']
+            appjs:['assets/js/app/**/*.js']
         },
         concat:{
             appjs:{
                 src:'<%= jshint.appjs %>',
                 dest:'<%= vars.destdir %>/assets/js/<%= vars.destappjs %>'
+            },
+            libjs: {
+                src: 'assets/js/lib/*.js',
+                dest: '<%= vars.destdir %>/assets/js/<%= vars.destlibjs %>'
             },
             css: {
                 src: 'assets/css/**/*.css',
