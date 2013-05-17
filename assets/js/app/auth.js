@@ -11,16 +11,16 @@
 
         var token,
             loginCallback = function (authResult) {
-                $('.error-message').addClass('hidden');
-                if(authResult.error){
-                   switch(authResult.error.code){
-                       case 401:
-                           $('#unauth').removeClass('hidden');
-                           break;
-                       case 500:
-                           $('#invalidreq').removeClass('hidden');
-                           break;
-                   }
+
+                if (authResult.error) {
+                    switch (authResult.error.code) {
+                        case 401:
+                            $('#unauth').removeClass('hidden');
+                            break;
+                        case 500:
+                            $('#invalidreq').removeClass('hidden');
+                            break;
+                    }
                     return;
                 }
 
@@ -36,6 +36,8 @@
 
                     $loginContainer = $('.form-container-login'),
                     $passwordContainer = $('.form-container-password');
+
+                $('.error-message').addClass('hidden');
 
                 $loginContainer.removeClass('form-container__error');
                 $passwordContainer.removeClass('form-container__error');
