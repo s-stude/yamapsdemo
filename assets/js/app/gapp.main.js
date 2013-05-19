@@ -2,17 +2,14 @@
 
     function Main() {
         var createMap = function (centerPosition) {
-                var yaMap,
-                    mapDeferred = $.Deferred();
+                var mapOnPage;
 
-                debugger;
-
-                yaMap = new ymaps.Map("map", {
+                mapOnPage = new ymaps.Map("map", {
                     center:centerPosition,
                     zoom:14
                 });
 
-                yaMap.geoObjects.add(
+                mapOnPage.geoObjects.add(
                     new ymaps.Placemark(
                         centerPosition,
                         {
@@ -23,13 +20,11 @@
                     )
                 );
 
-                yaMap.controls.add('smallZoomControl');
-
-                mapDeferred.resolve(yaMap);
-
-                return mapDeferred.promise();
+                mapOnPage.controls.add('smallZoomControl');
+                
+                return mapOnPage;
             },
-            createPoint = function (client, yaMap) {
+            createPoint = function (client, mapOnPage) {
                 console.log('Geocoding - ' + client.client);
 
                 addressGeocoder = ymaps.geocode(client.address, { results:1});
@@ -46,28 +41,24 @@
 
                         first.options.set('preset', 'twirl#redDotIcon');
 
-                        yaMap.geoObjects.add(first);
+                        mapOnPage.geoObjects.add(first);
                     });
             },
             initMap = function () {
 
                 var positionPromise = gapp.geolocator.getCurrentPosition();
-
-                var createdMapPromise = positionPromise.then(function (currentCenter) {
-                    return createMap(currentCenter);
-                });
-
                 var clientsInfoPromise = gapp.request.getClients();
 
-                $.when(createdMapPromise, clientsInfoPromise)
-                    .then(function (yaMap, clients) {
-                        var i;
+                $.when(positionPromise, clientsInfoPromise)
+                    .then(function (currentPosition, clients) {
+                        var i,
+                            mapOnPage = createMap(currentPosition);
 
                         for (i = 0; i < clients.client_list.length; i++) {
                             var client = clients.client_list[i];
 
                             console.log('Iterating - ' + client.client);
-                            createPoint(client, yaMap);
+                            createPoint(client, mapOnPage);
                         }
                     })
                     .fail(function (error) {
