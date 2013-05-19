@@ -21,7 +21,7 @@
                 );
 
                 mapOnPage.controls.add('smallZoomControl');
-                
+
                 return mapOnPage;
             },
             createPoint = function (client, mapOnPage) {

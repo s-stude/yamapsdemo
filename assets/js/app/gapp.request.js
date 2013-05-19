@@ -44,7 +44,7 @@
 
                 $.ajax({
                     url: clientsUrl,
-                    data: { access_token : gapp.auth.access_token },
+                    data: { access_token : gapp.auth.access_token() },
                     type: "POST" // TODO: POST in PROD
                 }).done(function(result){
                         d.resolve(result);

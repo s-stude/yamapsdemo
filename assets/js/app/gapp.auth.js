@@ -9,7 +9,13 @@
 
     function Auth() {
 
-        var token,
+        var token = function (tokenToSave) {
+                if (tokenToSave) {
+                    gapp.appStorage.setValue('access_token', tokenToSave)
+                }
+
+                return gapp.appStorage.getValue('access_token');
+            },
             navigateIndexPageOrError = function (authResultPlain) {
 
                 var authResult = authResultPlain; // TODO: For debug
@@ -27,7 +33,7 @@
                     return;
                 }
 
-                token = authResult.access_token;
+                token(authResult.access_token);
 
                 gapp.router.indexPage();
             },
@@ -66,7 +72,7 @@
             };
 
         return {
-            access_token : token,
+            access_token:token,
             login:handleLogin
         };
     }
