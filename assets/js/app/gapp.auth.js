@@ -7,10 +7,13 @@
  */
 (function (window, document, $, gapp, undefined) {
 
-    function Module() {
+    function Auth() {
 
         var token,
-            loginCallback = function (authResult) {
+            navigateIndexPageOrError = function (authResultPlain) {
+
+                var authResult = authResultPlain; // TODO: For debug
+//                var authResult = JSON.parse(authResultPlain);
 
                 if (authResult.error) {
                     switch (authResult.error.code) {
@@ -25,9 +28,10 @@
                 }
 
                 token = authResult.access_token;
+
                 gapp.router.indexPage();
             },
-            login = function () {
+            handleLogin = function () {
                 var $login = $('.input_login'),
                     $password = $('.input_password'),
 
@@ -51,16 +55,23 @@
                     return;
                 }
 
-
-                gapp.request.authenticate(loginVal, passwordVal, loginCallback);
+                gapp.request.authenticate(loginVal, passwordVal)
+                    .then(function (authResult) {
+                        navigateIndexPageOrError(authResult);
+                    })
+                    .fail(function (error) {
+                        debugger;
+                        alert(error);
+                    });
             };
 
         return {
-            login:login
+            access_token : token,
+            login:handleLogin
         };
     }
 
-    window.gapp.auth = new Module();
+    window.gapp.auth = new Auth();
 
 
 })(window, document, jQuery, gapp || {});

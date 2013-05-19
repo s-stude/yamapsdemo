@@ -8,7 +8,7 @@
 
 (function (window, document, gapp, undefined) {
 
-    function Module() {
+    function Router() {
 
         var loginPageUrl = '/login.html',
             indexPageUrl = '/index.html',
@@ -26,6 +26,6 @@
 
     }
 
-    window.gapp.router = new Module();
+    window.gapp.router = new Router();
 
 })(window, document, gapp || {});

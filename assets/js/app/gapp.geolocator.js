@@ -1,30 +1,28 @@
-(function (window, document, ymaps, gapp, undefined) {
+(function (window, document, $, gapp, undefined) {
 
-    function Module(){
-        var yaMap,
+    function GeoLocator(){
+        var d = $.Deferred(),
             isGeolocationApiSupported = (function () {
                 return 'geolocation' in window.navigator;
             })(),
 
-            onPositionSearchComplete,
-
             getCurrentPositionCallback = function (position) {
-                onPositionSearchComplete([position.coords.latitude, position.coords.longitude]);
+                d.resolve([position.coords.latitude, position.coords.longitude]);
             },
 
             errorCallback = function(err){
                 // nothing to handle yet. Falling back to YA Map API
-                onPositionSearchComplete([ymaps.geolocation.latitude, ymaps.geolocation.longitude]);
+                d.resolve([ymaps.geolocation.latitude, ymaps.geolocation.longitude]);
             },
 
-            getCurrentPosition = function (positionSearchCompleteCallback) {
-                onPositionSearchComplete = positionSearchCompleteCallback;
-
+            getCurrentPosition = function () {
                 if (isGeolocationApiSupported) {
                     window.navigator.geolocation.getCurrentPosition(getCurrentPositionCallback, errorCallback);
                 } else{
-                    onPositionSearchComplete([ymaps.geolocation.latitude, ymaps.geolocation.longitude]);
+                    d.resolve([ymaps.geolocation.latitude, ymaps.geolocation.longitude]);
                 }
+
+                return d.promise();
             };
 
         return {
@@ -33,6 +31,6 @@
         };
     }
 
-    gapp.geolocation = new Module();
+    gapp.geolocator = new GeoLocator();
 
-})(window, document, ymaps, gapp || {});
+})(window, document, jQuery, gapp || {});
