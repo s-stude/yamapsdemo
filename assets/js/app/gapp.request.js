@@ -34,7 +34,7 @@
                     d.resolve(result);
                 }).fail(function (error) {
                     debugger;
-                    d.reject();
+                    d.reject(error);
                 });
 
                 return d.promise();
@@ -49,7 +49,7 @@
                 }).done(function(result){
                         d.resolve(result);
                     }).fail(function(error){
-                        d.reject();
+                        d.reject(error);
                     });
 
                 return d.promise();
