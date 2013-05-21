@@ -1,8 +1,12 @@
 (function (window, document, $, ymaps, gapp, undefined) {
 
     function Main() {
-        var createMap = function (centerPosition) {
-                var mapOnPage;
+        var
+            createMap = function (centerPosition) {
+                var
+                    mapOnPage,
+                    refreshButton,
+                    buttonsToolBar = new ymaps.control.ToolBar();
 
                 mapOnPage = new ymaps.Map("map", {
                     center:centerPosition,
@@ -22,19 +26,41 @@
 
                 mapOnPage.controls.add('smallZoomControl');
 
+                // Create Clients button
+                refreshButton = new ymaps.control.Button({
+                    data: {
+                        image: 'assets/img/view_refresh.png',
+                        title: 'Обновить точки на карте'
+                    }
+                },{
+                    selectOnClick: false
+                });
+
+//                refreshButton.events.add('select', function () {
+//                    clientsClusterer.add(friendsGeoObjects);
+//                });
+//                clientsButton.events.add('deselect', function () {
+//                    clientsClusterer.remove(friendsGeoObjects);
+//                });
+
+                buttonsToolBar.add(refreshButton);
+                mapOnPage.controls.add(buttonsToolBar);
+
                 return mapOnPage;
             },
             createPoint = function (client, mapOnPage) {
                 console.log('Geocoding - ' + client.client);
 
-                addressGeocoder = ymaps.geocode(client.address, { results:1});
+                var geocodeAddress = ymaps.geocode(client.address, { results:1});
 
-                addressGeocoder.then(
+                geocodeAddress.then(
                     function (res) {
                         console.log('Geocoded - ' + client.client);
 
                         var first = res.geoObjects.get(0),
                             coords = first.geometry.getCoordinates(); // TODO: save to storage;
+
+                        gapp.appStorage.setValue(client.address, coords);
 
                         first.properties.set('balloonContentHeader', client.client);
                         first.properties.set('balloonContentBody', client.manager);
