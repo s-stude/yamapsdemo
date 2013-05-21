@@ -11,7 +11,7 @@
 
         var token = function (tokenToSave) {
                 if (tokenToSave) {
-                    gapp.appStorage.setValue('access_token', tokenToSave)
+                    gapp.appStorage.setValue('access_token', tokenToSave);
                 }
 
                 return gapp.appStorage.getValue('access_token');
@@ -36,6 +36,13 @@
                 token(authResult.access_token);
 
                 gapp.router.indexPage();
+            },
+            showLogin404Message = function(){
+                $('#desthost404').removeClass('hidden');
+            },
+            showCustomLoginError = function(errorCode, errorText){
+                $('#customMessage').text(errorCode + ' ' + errorText);
+                $('#customMessage').removeClass('hidden');
             },
             handleLogin = function () {
                 var $login = $('.input_login'),
@@ -66,8 +73,11 @@
                         navigateIndexPageOrError(authResult);
                     })
                     .fail(function (error) {
-                        debugger;
-                        alert(error);
+                        if(error.status === 404){
+                            showLogin404Message();
+                        } else {
+                            showCustomLoginError(error.status, error.statusText);
+                        }
                     });
             };
 
