@@ -10,8 +10,8 @@
 
     function Request() {
 
-        var loginUrl = 'http://localhost:20090/dmsbclient/auth',
-            clientsUrl = 'http://localhost:20090/clients/ClientInfo',
+        var loginUrl = '/dmsbclient/auth',
+            clientsUrl = '/dmsbclient/clientinfo',
             authenticate = function (login, password, authCallback) {
                 /*
                  *
@@ -42,9 +42,10 @@
             getClients = function () {
                 var d = $.Deferred();
 
+                var access_token = gapp.auth.access_token();
                 $.ajax({
                     url: clientsUrl,
-                    data: { access_token : gapp.auth.access_token() },
+                    data: { access_token : access_token },
                     type: "POST" // TODO: POST in PROD
                 }).done(function(result){
                         d.resolve(result);

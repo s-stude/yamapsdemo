@@ -10,8 +10,8 @@
 
     function Router() {
 
-        var loginPageUrl = '/login.html',
-            indexPageUrl = '/index.html',
+        var loginPageUrl = 'login.html',
+            indexPageUrl = 'index.html',
             loginPage = function () {
                 document.location = loginPageUrl;
             },

@@ -11,7 +11,7 @@
     function AppStorage(){
 
         var getValue = function(key){
-                localStorage.getItem(key);
+                return localStorage.getItem(key);
             },
             setValue = function(key, value){
                 localStorage.setItem(key, value);
