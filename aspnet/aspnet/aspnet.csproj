@@ -166,9 +166,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\ClientsController.cs" />
+    <Compile Include="Controllers\ClientVM.cs" />
     <Compile Include="Controllers\DmsbClientControler.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OpponentVM.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +234,13 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="www-root\assets\css\style.css" />
+    <Content Include="www-root\assets\img\refresh.png" />
+    <Content Include="www-root\assets\img\view_refresh.png" />
+    <Content Include="www-root\assets\js\gapp.js" />
+    <Content Include="www-root\assets\js\libs.js" />
+    <Content Include="www-root\index.html" />
+    <Content Include="www-root\login.html" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
