@@ -12,19 +12,5 @@ namespace aspnet.Controllers
         {
             return Redirect("/www-root/login.html");
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
