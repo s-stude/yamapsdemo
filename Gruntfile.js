@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg:grunt.file.readJSON('package.json'),
         vars:{
-            destdir: 'www-root',
+            destdir: 'aspnet/aspnet/www-root',
             destappjs: 'gapp.js',
             destlibjs: 'libs.js',
             destcss: 'style.css'
