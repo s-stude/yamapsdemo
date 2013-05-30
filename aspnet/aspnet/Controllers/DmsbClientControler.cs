@@ -146,7 +146,7 @@ namespace aspnet.Controllers
                     }, JsonRequestBehavior.AllowGet);
             }
 
-            _token = Guid.NewGuid().ToString();
+            _token = _token ?? Guid.NewGuid().ToString();
 
             return Json(new
                 {
