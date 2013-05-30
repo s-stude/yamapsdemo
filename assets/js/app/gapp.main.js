@@ -1,11 +1,27 @@
 (function (window, document, $, ymaps, gapp, undefined) {
 
     function Main() {
-        var
+        var mapOnPage,
+            clientsArrayToVerify = [],
+            clientsArrayCache = [],
+            clientsClusterer,
+            modifyClientsOnMap = function (clientPoint) {
+                var existingItems = $.grep(clientsArrayToVerify, function (elem, index) {
+                    return elem.properties.get('text') === clientPoint.properties.get('text');
+                });
+
+                if (existingItems.length === 0) {
+                    // TODO: Exclude cache and find out how to search in clusterer
+                    clientsArrayToVerify.push(clientPoint);
+                    clientsArrayCache.push(clientPoint);
+                    clientsClusterer.add(clientPoint);
+                }
+            },
             createMap = function (centerPosition) {
                 var
-                    mapOnPage,
                     refreshButton,
+                    clientsButton,
+                    opponentsButton,
                     buttonsToolBar = new ymaps.control.ToolBar();
 
                 mapOnPage = new ymaps.Map("map", {
@@ -17,38 +33,67 @@
                     new ymaps.Placemark(
                         centerPosition,
                         {
-                            iconContent:"Я",
-                            hintContent:"Вы тут",
-                            balloonContent:"Ваше местоположение"
+                            iconContent:"Y",
+                            hintContent:"I'm here",
+                            balloonContent:"My location"
                         }
                     )
                 );
 
                 mapOnPage.controls.add('smallZoomControl');
 
-                // Create Clients button
-                refreshButton = new ymaps.control.Button({
-                    data: {
-                        image: 'assets/img/view_refresh.png',
-                        title: 'Обновить точки на карте'
-                    }
-                },{
-                    selectOnClick: false
+
+                // create clusterer
+                clientsClusterer = new ymaps.Clusterer({
+                    preset:"twirl#invertedDarkgreenClusterIcons"
                 });
 
-//                refreshButton.events.add('select', function () {
-//                    clientsClusterer.add(friendsGeoObjects);
-//                });
-//                clientsButton.events.add('deselect', function () {
-//                    clientsClusterer.remove(friendsGeoObjects);
-//                });
+                mapOnPage.geoObjects.add(clientsClusterer);
+
+                // Create Clients button
+                refreshButton = new ymaps.control.Button({
+                    data:{
+                        image:'assets/img/view_refresh.png',
+                        title:'Refresh'
+                    }
+                }, {
+                    selectOnClick:false
+                });
+
+                clientsButton = new ymaps.control.Button('Clients');
+                clientsButton.events.add('select', function () {
+                    var i;
+                    for(i = 0; i < clientsArrayCache.length; i++){
+                        modifyClientsOnMap(clientsArrayCache[i]);
+                    }
+                });
+
+                clientsButton.events.add('deselect', function () {
+                    clientsClusterer.remove(clientsArrayToVerify);
+                    clientsArrayToVerify = [];
+                });
+
+                clientsButton.select();
+
+                opponentsButton = new ymaps.control.Button('Opponents');
+
+                refreshButton.events.add('click', function () {
+                    var clientsInfoPromise = gapp.request.getClients();
+                    $.when(clientsInfoPromise)
+                        .then(function (clients) {
+                            addClientsToMap(clients);
+                        })
+                        .fail(function (error) {
+                            alert(error);
+                        });
+                });
 
                 buttonsToolBar.add(refreshButton);
+                buttonsToolBar.add(clientsButton);
+                buttonsToolBar.add(opponentsButton);
                 mapOnPage.controls.add(buttonsToolBar);
-
-                return mapOnPage;
             },
-            createPoint = function (client, mapOnPage) {
+            createClientPoint = function (client, clientsClusterer) {
                 console.log('Geocoding - ' + client.client);
 
                 var geocodeAddress = ymaps.geocode(client.address, { results:1});
@@ -65,10 +110,23 @@
                         first.properties.set('balloonContentHeader', client.client);
                         first.properties.set('balloonContentBody', client.manager);
 
-                        first.options.set('preset', 'twirl#redDotIcon');
+                        first.options.set('preset', 'twirl#greenDotIcon');
 
-                        mapOnPage.geoObjects.add(first);
+                        modifyClientsOnMap(first);
                     });
+            },
+            addClientsToMap = function (clients) {
+                var i, client, clientsClusterer = new ymaps.Clusterer({
+                    preset:"twirl#invertedDarkgreenClusterIcons"
+                });
+
+
+                for (i = 0; i < clients.client_list.length; i++) {
+                    client = clients.client_list[i];
+
+                    console.log('Iterating - ' + client.client);
+                    createClientPoint(client, clientsClusterer);
+                }
             },
             initMap = function () {
 
@@ -77,30 +135,12 @@
 
                 $.when(positionPromise, clientsInfoPromise)
                     .then(function (currentPosition, clients) {
-                        var i,
-                            mapOnPage = createMap(currentPosition);
-
-                        for (i = 0; i < clients.client_list.length; i++) {
-                            var client = clients.client_list[i];
-
-                            console.log('Iterating - ' + client.client);
-                            createPoint(client, mapOnPage);
-                        }
+                        createMap(currentPosition);
+                        addClientsToMap(clients);
                     })
                     .fail(function (error) {
-                        debugger;
-                        alert(error);
+                        alert(error.statusText);
                     });
-
-                /*
-                 *
-                 * центр - асинк
-                 * загрузить список адресов - асинк
-                 * геокодирование - асинк
-                 *
-                 * */
-
-
             };
 
 
