@@ -13,27 +13,15 @@
         var loginUrl = '/dmsbclient/auth',
             clientsUrl = '/dmsbclient/clientinfo',
             authenticate = function (login, password, authCallback) {
-                /*
-                 *
-                 * POST /dmsbclient/auth
-                 *
-                 * PARAMS:
-                 * login
-                 * password
-                 *
-                 * */
-
                 var d = $.Deferred();
 
                 var ajaxPost = $.ajax({
                     url:loginUrl,
-                    data:JSON.stringify({login:login, password:password}),
+                    data: {login:login, password:password},
                     type:'POST' // TODO: This should be POST
                 }).done(function (result) {
-                    debugger;
                     d.resolve(result);
                 }).fail(function (error) {
-                    debugger;
                     d.reject(error);
                 });
 
