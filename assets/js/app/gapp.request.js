@@ -10,43 +10,60 @@
 
     function Request() {
 
-        var loginUrl = '/dmsbclient/auth',
+        var
+            loginUrl = '/dmsbclient/auth',
             clientsUrl = '/dmsbclient/clientinfo',
+            opponentsUrl = '/dmsbclient/opponentinfo',
+
             authenticate = function (login, password, authCallback) {
                 var d = $.Deferred();
 
                 var ajaxPost = $.ajax({
                     url:loginUrl,
-                    data: {login:login, password:password},
+                    data:{login:login, password:password},
                     type:'POST' // TODO: This should be POST
                 }).done(function (result) {
+                        d.resolve(result);
+                    }).fail(function (error) {
+                        d.reject(error);
+                    });
+
+                return d.promise();
+            },
+
+            getRequestedInfo = function (url) {
+                var
+                    access_token = gapp.auth.access_token(),
+                    d = $.Deferred();
+
+                var ajax = $.ajax({
+                    url:url,
+                    data:{ access_token:access_token },
+                    type:"POST"
+                });
+
+                ajax.done(function (result) {
                     d.resolve(result);
-                }).fail(function (error) {
+                });
+
+                ajax.fail(function (error) {
                     d.reject(error);
                 });
 
                 return d.promise();
             },
             getClients = function () {
-                var d = $.Deferred();
+                return getRequestedInfo(clientsUrl);
+            },
 
-                var access_token = gapp.auth.access_token();
-                $.ajax({
-                    url: clientsUrl,
-                    data: { access_token : access_token },
-                    type: "POST" // TODO: POST in PROD
-                }).done(function(result){
-                        d.resolve(result);
-                    }).fail(function(error){
-                        d.reject(error);
-                    });
-
-                return d.promise();
+            getOpponents = function () {
+                return getRequestedInfo(opponentsUrl);
             };
 
         return {
             authenticate:authenticate,
-            getClients:getClients
+            getClients:getClients,
+            getOpponents:getOpponents
         };
     }
 
