@@ -22,8 +22,63 @@ namespace aspnet.Controllers
                         {
                             new OpponentVM
                                 {
-                                    opponent = "Конкурент 1",
+                                    opponent = "Конкурент Иванов",
+                                    address = "Москва Знаменка 15",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Петров",
+                                    address = "Москва Колымажный переулок 10",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Сидоров",
+                                    address = "Москва Тверской бульвар 20",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Смирнов",
+                                    address = "Леонтьевский переулок 15"
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Терещенко",
+                                    address = "Москва Новый Арбат 15",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Иванкин",
+                                    address = "Киев Гайдара 27",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Иванов",
                                     address = "крымских партизан 7",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Петров",
+                                    address = "крымских партизан 12",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Сидоров",
+                                    address = "Саксаганского 60",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Смирнов",
+                                    address = "Саксаганского 87",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Терещенко",
+                                    address = "Жилянская 69",
+                                },
+                            new OpponentVM
+                                {
+                                    opponent = "Конкурент Иванкин",
+                                    address = "Гайдара 27",
                                 },
                             new OpponentVM
                                 {
@@ -61,21 +116,58 @@ namespace aspnet.Controllers
                         {
                             new ClientVM
                                 {
-                                    client = "Иванов",
+                                    client = "Клиент Иванов",
+                                    address = "Москва Вознесенский переулок 20",
+                                    manager = "Manager 1"
+                                },
+                            new ClientVM
+                                {
+                                    client = "Клиент Петров",
+                                    address = "Москва Камергерский переулок 2",
+                                    manager = "Manager 2"
+                                },
+                            new ClientVM
+                                {
+                                    client = "Клиент Сидоров",
+                                    address = "Москва Моховая улица 11",
+                                    manager = "Manager 3"
+                                },
+                            new ClientVM()
+                                {
+                                    client = "Client: Ivanov",
+                                    address = "Москва Большая Никитская 8",
+                                    manager = "Manager 4"
+                                },
+                            new ClientVM()
+                                {
+                                    client = "Client: Petrov",
+                                    address = "Москва улица Воздвиженка 12",
+                                    manager = "Manager 5"
+                                },
+                            new ClientVM()
+                                {
+                                    client = "Client: Sidorov",
+                                    address = "Москва Газетный переулок",
+                                    manager = ""
+                                },
+
+                            new ClientVM
+                                {
+                                    client = "Клиент Иванов",
                                     address = "крымских партизан 21",
-                                    manager = "Мэн1"
+                                    manager = "Менеджер 1"
                                 },
                             new ClientVM
                                 {
-                                    client = "Петров",
+                                    client = "Клиент Петров",
                                     address = "крымских партизан 23",
-                                    manager = "Мэн2"
+                                    manager = "Менеджер 2"
                                 },
                             new ClientVM
                                 {
-                                    client = "Сидоров",
+                                    client = "Клиент Сидоров",
                                     address = "крымских партизан",
-                                    manager = "Мэн3"
+                                    manager = "Mенеджер 3"
                                 },
                             new ClientVM()
                                 {
